@@ -19,31 +19,31 @@ public class business implements quanly {
 		System.out.println("Nhap ID: ");
 		id=sc.nextInt();
 		sc.nextLine();
-		isIDvalid(id);
+		checkIDinput(id);
 		
 		System.out.println("Nhap ten: ");
 		name=sc.nextLine();
-		if(name.length()==0) {
-			throw new InputMismatchException("Chua nhap ten");
-		}
+		checkInput(name);
 		System.out.println("Nhap tuoi: ");
 		age=sc.nextInt();
-		if(Integer.toString(age).length()==0) {
-			throw new InputMismatchException("Chua nhap tuoi");
-		}
+		
+		checkInput(Integer.toString(age));
 		sc.nextLine();
 		System.out.println("Nhap phong ban: ");
 		pb=sc.nextLine();
-		if(pb.length()==0) {
-			throw new InputMismatchException("Chua nhap phong ban");
-		}
+		checkInput(pb);
 		Employee nv=new Employee(id,name,age,pb);
 		nhanVien.add(nv);
 		
 	}
-	public void isIDvalid(int id) {
+	public void checkIDinput(int id) {
 		if(Integer.toString(id).length()!=6) {
 			throw new InputMismatchException("ID phai co 6 ky tu");
+		}
+	}
+	public void checkInput(String in) {
+		if(in.length()==0) {
+			throw new InputMismatchException("Vui long khong bo trong");
 		}
 	}
 	public void addNV() {
@@ -98,7 +98,26 @@ public class business implements quanly {
 	}
 	
 	public void change() {
-		
+		System.out.println("Nhap ID nhan vien can thay doi");
+		int id=sc.nextInt();
+		checkIDinput(id);
+		int index=getIndex(id);
+		if(index==-1) {
+			System.out.println("Khong tim thay nhan vien");
+		}
+		else {
+			System.out.println("Nhap new ID");
+			id=sc.nextInt();
+			sc.nextLine();
+			System.out.println("Nhap new name");
+			String name=sc.nextLine();
+			System.out.println("Nhap new Age");
+			int age=sc.nextInt();
+			sc.nextLine();
+			System.out.println("Nhap new PB");
+			String pb=sc.nextLine();
+			nhanVien.set(index, new Employee(id,name,age,pb));
+		}
 	}
 	public void print() {
 		for(Employee a:nhanVien) {
@@ -121,6 +140,7 @@ public class business implements quanly {
 			System.out.println("2.Xoa Nhan vien");
 			System.out.println("3.Sap xep Nhan vien");
 			System.out.println("4.In Nhan vien");
+			System.out.println("5.Thay doi thong tin");
 			key=sc.nextInt();
 			switch(key) {
 			case 1:
@@ -134,6 +154,9 @@ public class business implements quanly {
 				break;
 			case 4:
 				print();
+				break;
+			case 5:
+				change();
 				break;
 			default:
 				
